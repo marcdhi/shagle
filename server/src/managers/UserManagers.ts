@@ -1,8 +1,8 @@
 import { Socket } from "socket.io";
 
-let GLOBAL_ROOM_ID = 1
 
-interface User {
+
+export interface User {
     socket: Socket,
     name: string
 }
@@ -35,15 +35,13 @@ export class UserManager {
         }
         const user1 = this.users.find(x => x.socket.id === this.queue.pop())
         const user2 = this.users.find(x => x.socket.id === this.queue.pop())
-        const roomId = this.generate()
+        
         user1?.socket.emit("new-room", {
             type: "send-offer",
-            roomId,
+           
 
         })
     }
 
-    generate() {
-        return GLOBAL_ROOM_ID++
-    }
+    
 }
