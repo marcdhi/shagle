@@ -23,13 +23,14 @@ export class UserManager {
             {name, socket}
             )
             this.queue.push(socket.id) // queue with all socket id's
+            socket.send("lobby")
             this.clearQueue()
             this.initHandlers(socket)
     }
 
     removeUser(socketId: string) {
-        this.users = this.users.filter(x => x.socket.id === socketId) // remove from users array
-        this.queue = this.queue.filter(x => x === socketId) // remove from the queue
+        this.users = this.users.filter(x => x.socket.id !== socketId) // remove from users array, by creating a new users array not having the current user socket id
+        this.queue = this.queue.filter(x => x === socketId) 
     }
 
     clearQueue() {
@@ -42,7 +43,7 @@ export class UserManager {
             return
          }
         const room = this.roomManager.createRoom(user1, user2)
-       
+        this.clearQueue()
     }
 
     initHandlers(socket: Socket) {
