@@ -23,15 +23,24 @@ export class RoomManager {
         
         console.log("here are the room", this.rooms);
         
-        user1?.socket.emit("send-offer", {
+        user1.socket.emit("send-offer", {
             roomId
         })
+
+        
     }
 
    
 
-    onOffer(roomId: string, sdp: string) {
-        const user2 = this.rooms.get(roomId)?.user2
+    onOffer(roomId: any, sdp: string) {
+        console.log(this.rooms);
+        console.log(typeof(roomId));
+        
+        console.log("id thta tis aieoif aeaaiofa af ", roomId["roomId"]);
+        
+    
+        const user2 = this.rooms.get(roomId["roomId"])?.user2
+        
         console.log("this is user2 ", user2);
         
         user2?.socket.emit("offer", {
@@ -40,9 +49,9 @@ export class RoomManager {
         })
     }
 
-    onAnswer(roomId: string, sdp: string) {
+    onAnswer(roomId: any, sdp: string) {
 
-        const user1 = this.rooms.get(roomId)?.user1
+        const user1 = this.rooms.get(roomId["roomId"])?.user1
         console.log("this is user1 ", user1);
         
         user1?.socket.emit("answer", {

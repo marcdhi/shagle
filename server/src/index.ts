@@ -5,7 +5,7 @@ import http from "http"
 import { UserManager } from "./managers/UserManagers";
 
 const app = express();
-const server = http.createServer(http);
+const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
@@ -13,7 +13,7 @@ const io = new Server(server, {
   }
 })
 
-const userManager = new UserManager
+const userManager = new UserManager()
 
 io.on('connection', (socket: Socket) => {
     console.log("User connected");
@@ -23,6 +23,6 @@ io.on('connection', (socket: Socket) => {
     })
 })
 
-server.listen(3000, () => {
+server.listen(4000, () => {
   console.log('listening on *:3000');
 });
