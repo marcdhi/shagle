@@ -8,13 +8,13 @@ const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const UserManagers_1 = require("./managers/UserManagers");
 const app = (0, express_1.default)();
-const server = http_1.default.createServer(http_1.default);
+const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, {
     cors: {
         origin: "*"
     }
 });
-const userManager = new UserManagers_1.UserManager;
+const userManager = new UserManagers_1.UserManager();
 io.on('connection', (socket) => {
     console.log("User connected");
     userManager.addUser("marafaefa", socket);
@@ -22,6 +22,6 @@ io.on('connection', (socket) => {
         userManager.removeUser(socket.id);
     });
 });
-server.listen(3000, () => {
+server.listen(4000, () => {
     console.log('listening on *:3000');
 });

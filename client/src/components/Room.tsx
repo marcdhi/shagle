@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 
-const URL = "http://localhost:3000"
+const URL = "http://localhost:4000"
 
 export const Room = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const name = searchParams.get("name");
-    const [socket, setSocket] = useState<null | Socket>(null)
+    // const [socket, setSocket] = useState<null | Socket>(null)
     const [lobby, setLobby] = useState(true)
         
 
     useEffect(() => {
         const socket = io(URL);
 
-          setSocket(socket)
+          // setSocket(socket)
           socket.on('send-offer', (roomId) => {
             alert("Send offer please!!")
             socket.emit("offer", {

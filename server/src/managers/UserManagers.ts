@@ -38,8 +38,7 @@ export class UserManager {
     }
 
     clearQueue() {
-        console.log(this.users);
-        console.log(this.queue);
+       
         
         
         if(this.queue.length < 2) {
@@ -50,8 +49,7 @@ export class UserManager {
         const user1 = this.users.find(x => x.socket.id === id1)
         const user2 = this.users.find(x => x.socket.id === id2)
 
-        console.log(user1);
-        console.log(user2);
+        
         console.log(id1);
         console.log(id2);
         
@@ -60,17 +58,25 @@ export class UserManager {
          if(!user1 || !user2) {
             return
          }
+         console.log("creating room.......");
+         
         const room = this.roomManager.createRoom(user1, user2)
         this.clearQueue()
     }
 
     initHandlers(socket: Socket) {
+        console.log("from the init handlers");
+        
         socket.on("offer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
             this.roomManager.onOffer(roomId, sdp)
+            console.log("sent offers");
         })
-
+        
         socket.on("answer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
             this.roomManager.onAnswer(roomId, sdp)
+            console.log("sent answers");
         })
+
+        
     }
 }

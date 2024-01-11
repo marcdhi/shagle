@@ -22,8 +22,6 @@ class UserManager {
         this.queue = this.queue.filter(x => x === socketId);
     }
     clearQueue() {
-        console.log(this.users);
-        console.log(this.queue);
         if (this.queue.length < 2) {
             return;
         }
@@ -31,22 +29,24 @@ class UserManager {
         const id2 = this.queue.pop();
         const user1 = this.users.find(x => x.socket.id === id1);
         const user2 = this.users.find(x => x.socket.id === id2);
-        console.log(user1);
-        console.log(user2);
         console.log(id1);
         console.log(id2);
         if (!user1 || !user2) {
             return;
         }
+        console.log("creating room.......");
         const room = this.roomManager.createRoom(user1, user2);
         this.clearQueue();
     }
     initHandlers(socket) {
+        console.log("from the init handlers");
         socket.on("offer", ({ sdp, roomId }) => {
             this.roomManager.onOffer(roomId, sdp);
+            console.log("sent offers");
         });
         socket.on("answer", ({ sdp, roomId }) => {
             this.roomManager.onAnswer(roomId, sdp);
+            console.log("sent answers");
         });
     }
 }
